@@ -8,11 +8,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.appRouter});
   final AppRouter appRouter;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: appRouter.generateRoute, // الصح
+      onGenerateRoute: appRouter.generateRoute,
     );
   }
 }
