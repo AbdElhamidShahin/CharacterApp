@@ -1,4 +1,4 @@
-class Carcters {
+class Caracter {
   int? id;
   String? name;
   String? status;
@@ -10,7 +10,7 @@ class Carcters {
   String? url;
   String? created;
 
-  Carcters({
+  Caracter({
     this.id,
     this.name,
     this.status,
@@ -23,7 +23,7 @@ class Carcters {
     this.created,
   });
 
-  Carcters.fromJson(Map<String, dynamic> json) {
+  Caracter.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     status = json['status'];

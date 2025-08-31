@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:project_bloc/constance/Strings.dart';
 
-
-
 class CarcterWebServise {
   late Dio dio;
   CarcterWebServise() {
