@@ -5,7 +5,7 @@ import '../../../../data/models/repostry/api/ChaructersRepostry.dart';
 
 class CaractersCubit extends Cubit<CaractersState> {
   final ChaructersRepostry chaructersRepostry;
-  late List<Caracter> caracters;
+  List<Caracter> caracters = [];
 
   CaractersCubit(this.chaructersRepostry) : super(CarctersInitialState());
 

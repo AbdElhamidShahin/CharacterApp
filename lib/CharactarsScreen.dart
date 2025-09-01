@@ -33,13 +33,15 @@ class _CharactarsScreenState extends State<CharactarsScreen> {
 
   Widget BuildCaractersList() {
     return GridView.builder(
+      shrinkWrap: true, // مهم
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 1,
-        childAspectRatio: 3 / 2,
+        childAspectRatio: 2 / 3,
       ),
+      itemCount: allCaracters.length,
       itemBuilder: (context, index) {
-        return CarctersItem();
+        return CarctersItem(allCaracters: allCaracters[index]);
       },
     );
   }
@@ -51,7 +53,7 @@ class _CharactarsScreenState extends State<CharactarsScreen> {
           allCaracters = (state).caracters;
           return BuildLodedListWidget();
         } else {
-          return CircularProgressIndicator(color: myColors.myYello);
+          return Center(child: CircularProgressIndicator(color: myColors.myYello));
         }
       },
     );
