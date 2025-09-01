@@ -1,17 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_bloc/business_logic/cubit/state/bloc/cubit.dart';
+import 'package:project_bloc/business_logic/cubit/state/bloc/state.dart';
+import 'package:project_bloc/constance/my-colors.dart';
+import 'package:project_bloc/data/models/repostry/api/Carcters.dart';
 
-class CharactarsScreen extends StatelessWidget {
-  const CharactarsScreen({super.key});
+import 'Presnetaion/widget/Screens/CarctersItem.dart';
+
+class CharactarsScreen extends StatefulWidget {
+  CharactarsScreen({super.key});
+  @override
+  State<CharactarsScreen> createState() => _CharactarsScreenState();
+}
+
+late List<Caracter> allCaracters;
+
+class _CharactarsScreenState extends State<CharactarsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    allCaracters = BlocProvider.of<CaractersCubit>(context).getAllCharactars();
+  }
+
+  Widget BuildLodedListWidget() {
+    return SingleChildScrollView(
+      child: Container(
+        color: myColors.myGray,
+        child: Column(children: [BuildCaractersList()]),
+      ),
+    );
+  }
+
+  Widget BuildCaractersList() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 1,
+        childAspectRatio: 3 / 2,
+      ),
+      itemBuilder: (context, index) {
+        return CarctersItem();
+      },
+    );
+  }
+
+  Widget BuildBlocWidget() {
+    return BlocBuilder<CaractersCubit, CaractersState>(
+      builder: (context, state) {
+        if (state is CaractersLaodedState) {
+          allCaracters = (state).caracters;
+          return BuildLodedListWidget();
+        } else {
+          return CircularProgressIndicator(color: myColors.myYello);
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Charactars Screen",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: myColors.myYello,
+        title: Text(
+          "Charactar",
+          style: TextStyle(color: Colors.grey, fontSize: 24),
         ),
       ),
+      body: BuildBlocWidget(),
     );
   }
 }

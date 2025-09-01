@@ -3,7 +3,7 @@ import 'package:project_bloc/business_logic/cubit/state/bloc/state.dart';
 import '../../../../data/models/repostry/api/Carcters.dart';
 import '../../../../data/models/repostry/api/ChaructersRepostry.dart';
 
-class CaractersCubit extends Cubit<CarctersState> {
+class CaractersCubit extends Cubit<CaractersState> {
   final ChaructersRepostry chaructersRepostry;
   late List<Caracter> caracters;
 
