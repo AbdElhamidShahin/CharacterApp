@@ -7,13 +7,62 @@ class CarctersItem extends StatelessWidget {
   final Caracter allCaracters;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: myColors.myWhite,
-      child: Column(
-        children: [
-          Image.network(allCaracters.image ?? ''),
-          Text(allCaracters.name ?? ''),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10, top: 10),
+
+      child: Container(
+        decoration: BoxDecoration(
+          color: myColors.myWhite,
+
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Stack(
+            children: [
+              Container(
+                child:
+                    (allCaracters.image != null &&
+                        allCaracters.image!.isNotEmpty)
+                    ? FadeInImage.assetNetwork(
+                        placeholder: "assets/image/Loading.gif",
+                        image: allCaracters.image!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 200,
+                      )
+                    : Image.asset(
+                        "assets/image/images (1).jpg",
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 200,
+                      ),
+              ),
+
+              Positioned(
+                bottom: 0, // يخليه تحت
+                left: 0,
+                right: 0,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color: Colors.black.withOpacity(.5),
+                  child: Text(
+                    '${allCaracters.name}',
+                    style: TextStyle(
+                      color: myColors.myWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      height: 1.3,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

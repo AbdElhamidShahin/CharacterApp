@@ -37,7 +37,9 @@ class _CharactarsScreenState extends State<CharactarsScreen> {
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 2 / 3,
+        childAspectRatio: 1 / 1,
+        mainAxisSpacing: 0,
+        crossAxisSpacing: 0,
       ),
       itemCount: allCaracters.length,
       itemBuilder: (context, index) {
@@ -53,7 +55,9 @@ class _CharactarsScreenState extends State<CharactarsScreen> {
           allCaracters = (state).caracters;
           return BuildLodedListWidget();
         } else {
-          return Center(child: CircularProgressIndicator(color: myColors.myYello));
+          return Center(
+            child: CircularProgressIndicator(color: myColors.myYello),
+          );
         }
       },
     );
@@ -64,9 +68,11 @@ class _CharactarsScreenState extends State<CharactarsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: myColors.myYello,
-        title: Text(
-          "Charactar",
-          style: TextStyle(color: Colors.grey, fontSize: 24),
+        title: Center(
+          child: Text(
+            "Charactar",
+            style: TextStyle(color: myColors.myWhite, fontSize: 32),
+          ),
         ),
       ),
       body: BuildBlocWidget(),
