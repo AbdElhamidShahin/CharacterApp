@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_bloc/CharactarsScreen.dart';
 import 'package:project_bloc/business_logic/cubit/state/bloc/cubit.dart';
 import 'package:project_bloc/data/models/repostry/api/CarcterWebServise.dart';
+import 'package:project_bloc/data/models/repostry/api/Carcters.dart';
 import 'Presnetaion/widget/Screens/CharactarsDetailsScreen.dart';
 import 'constance/Strings.dart';
+import 'data/models/repostry/api/Carcters.dart';
 import 'data/models/repostry/api/ChaructersRepostry.dart';
 
 class AppRouter {
@@ -25,9 +27,10 @@ class AppRouter {
             child: CharactarsScreen(),
           ),
         );
-      case carctersDetailsScreen:
+      case caractersDetailsScreen:
+        final caracter =settings.arguments as Caracter;
         return MaterialPageRoute(
-          builder: (_) => const CharactarsDetailsScreen(),
+          builder: (_) => CharactarsDetailsScreen(caracter: caracter,),
         );
     }
   }
