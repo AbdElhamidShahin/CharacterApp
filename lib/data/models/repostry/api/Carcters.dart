@@ -9,6 +9,7 @@ class Caracter {
   List<String>? episode;
   String? url;
   String? created;
+  Map<String, dynamic>? location;
 
   Caracter({
     this.id,
@@ -21,6 +22,7 @@ class Caracter {
     this.episode,
     this.url,
     this.created,
+    this.location,
   });
 
   Caracter.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,7 @@ class Caracter {
     episode = json['episode'].cast<String>();
     url = json['url'];
     created = json['created'];
+    location = json['location'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +47,7 @@ class Caracter {
     data['species'] = this.species;
     data['type'] = this.type;
     data['gender'] = this.gender;
+    data['location'] = this.location;
 
     data['image'] = this.image;
     data['episode'] = this.episode;
