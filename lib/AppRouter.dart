@@ -10,11 +10,11 @@ import 'data/models/repostry/api/Carcters.dart';
 import 'data/models/repostry/api/ChaructersRepostry.dart';
 
 class AppRouter {
-  late ChaructersRepostry chaructersRepostry;
+  late CharauctersRepostry chaructersRepostry;
   late CaractersCubit caractersCubit;
 
   AppRouter() {
-    chaructersRepostry = ChaructersRepostry(CarcterWebServise());
+    chaructersRepostry = CharauctersRepostry(CaracterWebServise());
     caractersCubit = CaractersCubit(chaructersRepostry);
   }
 
@@ -30,7 +30,10 @@ class AppRouter {
       case caractersDetailsScreen:
         final caracter =settings.arguments as Caracter;
         return MaterialPageRoute(
-          builder: (_) => CharactarsDetailsScreen(caracter: caracter,),
+          builder: (_) => BlocProvider(
+
+              create: ( context)=>CaractersCubit(chaructersRepostry),
+              child: CharactarsDetailsScreen(caracter: caracter,)),
         );
     }
   }

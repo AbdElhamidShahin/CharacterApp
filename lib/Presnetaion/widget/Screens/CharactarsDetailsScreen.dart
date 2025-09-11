@@ -1,11 +1,17 @@
+import 'dart:math';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_bloc/business_logic/cubit/state/bloc/cubit.dart';
+import 'package:project_bloc/business_logic/cubit/state/bloc/state.dart';
 import 'package:project_bloc/constance/my-colors.dart';
 import 'package:project_bloc/data/models/repostry/api/Carcters.dart';
 
 class CharactarsDetailsScreen extends StatelessWidget {
   final Caracter caracter;
   CharactarsDetailsScreen({super.key, required this.caracter});
-  Widget buildSelverAppBar() {
+  Widget buildSliverAppBar() {
     return SliverAppBar(
       expandedHeight: 600,
       pinned: true,
@@ -14,18 +20,21 @@ class CharactarsDetailsScreen extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
-          "${caracter.name}",
-          style: TextStyle(color: myColors.myGray),
+          caracter.name ?? "",
+          style: TextStyle(
+            color: myColors.myWhite,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         background: Hero(
           tag: "${caracter.id}",
-          child: Image.network("${caracter.image}", fit: BoxFit.cover),
+          child: Image.network(caracter.image ?? "", fit: BoxFit.cover),
         ),
       ),
     );
   }
 
-  Widget CharacterInfo(String title, String value) {
+  Widget characterInfo(String title, String value) {
     return RichText(
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -48,7 +57,7 @@ class CharactarsDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget BuildDivider(double endIndent) {
+  Widget buildDivider(double endIndent) {
     return Divider(
       endIndent: endIndent,
 
@@ -65,7 +74,7 @@ class CharactarsDetailsScreen extends StatelessWidget {
       backgroundColor: myColors.myGray,
       body: CustomScrollView(
         slivers: [
-          buildSelverAppBar(),
+          buildSliverAppBar(),
           SliverList(
             delegate: SliverChildListDelegate([
               Container(
@@ -76,33 +85,77 @@ class CharactarsDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
-                    CharacterInfo("Name : ", "${caracter.name}"),
-                    BuildDivider(320),
+                    characterInfo("Name : ", "${caracter.name}"),
+                    buildDivider(320),
 
-                    CharacterInfo("Status : ", "${caracter.status}"),
-                    BuildDivider(310),
+                    characterInfo("Status : ", "${caracter.status}"),
+                    buildDivider(310),
 
-                    CharacterInfo(
+                    characterInfo(
                       "Location : ",
                       "${caracter.location?['name']}",
                     ),
-                    BuildDivider(295),
+                    buildDivider(295),
 
-                    CharacterInfo("Species : ", "${caracter.species}"),
-                    BuildDivider(300),
+                    characterInfo("Species : ", "${caracter.species}"),
+                    buildDivider(300),
 
-                    CharacterInfo("Episodes : ", "${caracter.episode?.length}"),
-                    BuildDivider(290),
-                    SizedBox(
-                      height: 300,
-                    )
+                    characterInfo("Episodes : ", "${caracter.episode?.length}"),
+                    buildDivider(290),
+
+                    caracter.species!.isEmpty ? Container() : buildDivider(150),
+                    characterInfo('Actor/Actress : ', "${caracter.name}"),
                   ],
                 ),
+              ),
+              SizedBox(height: 500),
+
+              BlocBuilder<CaractersCubit, CaractersState>(
+                builder: (context, state) {
+                  return CheckInfoCaracterLoded(state);
+                },
               ),
             ]),
           ),
         ],
       ),
     );
+  }
+
+  Widget CheckInfoCaracterLoded(CaractersState state) {
+    if (state is CaractersLaodedState) {
+      return DesplayCararcterRendomEmpty(state);
+    } else {
+      return CircularProgressIndicator();
+    }
+  }
+
+  Widget DesplayCararcterRendomEmpty(state) {
+    var caracter = (state).caracters;
+
+    if (caracter.length != 0) {
+      int rendomeCaracterIndex = Random().nextInt(caracter.length - 1);
+
+      return Center(
+        child: DefaultTextStyle(
+          style: TextStyle(
+            color: myColors.myWhite,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          child: AnimatedTextKit(
+            repeatForever: true,
+            animatedTexts: [
+              FlickerAnimatedText(caracter[rendomeCaracterIndex]),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }

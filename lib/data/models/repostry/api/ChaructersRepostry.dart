@@ -2,13 +2,12 @@ import 'package:project_bloc/data/models/repostry/api/CarcterWebServise.dart';
 
 import 'Carcters.dart';
 
-class ChaructersRepostry {
-  final CarcterWebServise carcterWebServise;
+class CharauctersRepostry {
+  final CaracterWebServise caracterWebServise;
 
-  ChaructersRepostry(this.carcterWebServise);
-
+  CharauctersRepostry(this.caracterWebServise);
   Future<List<Caracter>> getAllCharactars() async {
-    final charcter = await carcterWebServise.getAllCharactars();
-    return charcter.map((charcter) => Caracter.fromJson(charcter)).toList();
+    final caracter = await caracterWebServise.getAllCharactars();
+    return caracter.map((caracter) => Caracter.fromJson(caracter)).toList();
   }
 }

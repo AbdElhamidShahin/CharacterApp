@@ -4,17 +4,15 @@ import '../../../../data/models/repostry/api/Carcters.dart';
 import '../../../../data/models/repostry/api/ChaructersRepostry.dart';
 
 class CaractersCubit extends Cubit<CaractersState> {
-  final ChaructersRepostry chaructersRepostry;
-  List<Caracter> caracters = [];
+  final CharauctersRepostry charauctersRepostry;
+  List<Caracter> caracter = [];
 
-  CaractersCubit(this.chaructersRepostry) : super(CarctersInitialState());
-
+  CaractersCubit(this.charauctersRepostry) : super(CarctersInitialState());
   List<Caracter> getAllCharactars() {
-    chaructersRepostry.getAllCharactars().then((caracters) {
-      emit(CaractersLaodedState(caracters));
-
-      this.caracters = caracters;
+    charauctersRepostry.getAllCharactars().then((caracter) {
+      emit(CaractersLaodedState(caracter));
+      this.caracter = caracter;
     });
-    return caracters;
+    return caracter;
   }
 }

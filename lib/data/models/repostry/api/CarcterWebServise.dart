@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:project_bloc/constance/Strings.dart';
 
-class CarcterWebServise {
+class CaracterWebServise {
   late Dio dio;
-  CarcterWebServise() {
-    //constractor
+
+  CaracterWebServise() {
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
@@ -13,7 +13,7 @@ class CarcterWebServise {
   }
   Future<List<dynamic>> getAllCharactars() async {
     try {
-      Response response = await dio.get("character");
+      Response response = await dio.get('character');
       print(response.data);
       return response.data["results"];
     } catch (e) {
