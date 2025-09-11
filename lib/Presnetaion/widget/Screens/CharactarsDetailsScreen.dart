@@ -8,28 +8,64 @@ import 'package:project_bloc/business_logic/cubit/state/bloc/state.dart';
 import 'package:project_bloc/constance/my-colors.dart';
 import 'package:project_bloc/data/models/repostry/api/Carcters.dart';
 
+import 'DesplayCararcterRendomEmpty.dart';
+import 'buildSliverAppBar.dart';
+
 class CharactarsDetailsScreen extends StatelessWidget {
   final Caracter caracter;
   CharactarsDetailsScreen({super.key, required this.caracter});
-  Widget buildSliverAppBar() {
-    return SliverAppBar(
-      expandedHeight: 600,
-      pinned: true,
-      stretch: true,
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       backgroundColor: myColors.myGray,
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        title: Text(
-          caracter.name ?? "",
-          style: TextStyle(
-            color: myColors.myWhite,
-            fontWeight: FontWeight.bold,
+      body: CustomScrollView(
+        slivers: [
+          buildSliverAppBar(caracter),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Container(
+                margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+                    characterInfo("Name : ", "${caracter.name}"),
+                    buildDivider(320),
+
+                    characterInfo("Status : ", "${caracter.status}"),
+                    buildDivider(310),
+
+                    characterInfo(
+                      "Location : ",
+                      "${caracter.location?['name']}",
+                    ),
+                    buildDivider(295),
+
+                    characterInfo("Species : ", "${caracter.species}"),
+                    buildDivider(300),
+
+                    characterInfo("Episodes : ", "${caracter.episode?.length}"),
+                    buildDivider(290),
+
+                    characterInfo('Actor/Actress : ', "${caracter.name}"),
+                    buildDivider(255),
+                  ],
+                ),
+              ),
+              SizedBox(height: 100),
+
+              BlocBuilder<CaractersCubit, CaractersState>(
+                builder: (context, state) {
+                  return DesplayCararcterRendomEmpty(caracter);
+                },
+              ),
+              SizedBox(height: 500),
+            ]),
           ),
-        ),
-        background: Hero(
-          tag: "${caracter.id}",
-          child: Image.network(caracter.image ?? "", fit: BoxFit.cover),
-        ),
+        ],
       ),
     );
   }
@@ -66,96 +102,5 @@ class CharactarsDetailsScreen extends StatelessWidget {
       height: 30,
       thickness: 3,
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: myColors.myGray,
-      body: CustomScrollView(
-        slivers: [
-          buildSliverAppBar(),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  children: [
-                    characterInfo("Name : ", "${caracter.name}"),
-                    buildDivider(320),
-
-                    characterInfo("Status : ", "${caracter.status}"),
-                    buildDivider(310),
-
-                    characterInfo(
-                      "Location : ",
-                      "${caracter.location?['name']}",
-                    ),
-                    buildDivider(295),
-
-                    characterInfo("Species : ", "${caracter.species}"),
-                    buildDivider(300),
-
-                    characterInfo("Episodes : ", "${caracter.episode?.length}"),
-                    buildDivider(290),
-
-                    caracter.species!.isEmpty ? Container() : buildDivider(150),
-                    characterInfo('Actor/Actress : ', "${caracter.name}"),
-                  ],
-                ),
-              ),
-              SizedBox(height: 500),
-
-              BlocBuilder<CaractersCubit, CaractersState>(
-                builder: (context, state) {
-                  return CheckInfoCaracterLoded(state);
-                },
-              ),
-            ]),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget CheckInfoCaracterLoded(CaractersState state) {
-    if (state is CaractersLaodedState) {
-      return DesplayCararcterRendomEmpty(state);
-    } else {
-      return CircularProgressIndicator();
-    }
-  }
-
-  Widget DesplayCararcterRendomEmpty(state) {
-    var caracter = (state).caracters;
-
-    if (caracter.length != 0) {
-      int rendomeCaracterIndex = Random().nextInt(caracter.length - 1);
-
-      return Center(
-        child: DefaultTextStyle(
-          style: TextStyle(
-            color: myColors.myWhite,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-          child: AnimatedTextKit(
-            repeatForever: true,
-            animatedTexts: [
-              FlickerAnimatedText(caracter[rendomeCaracterIndex]),
-            ],
-            onTap: () {
-              print("Tap Event");
-            },
-          ),
-        ),
-      );
-    } else {
-      return Container();
-    }
   }
 }
