@@ -1,7 +1,12 @@
 # project_bloc
 
-A new Flutter project.
 
+## 📱 Screenshots  
+<img width="371" height="812" alt="Screenshot 2025-09-29 224500" src="https://github.com/user-attachments/assets/16296562-8ea1-421f-bd03-ac88599c0a8e" />
+
+<img src="ht<img width="373" height="812" alt="Screenshot 2025-09-29 224516" src="https://github.com/user-attachments/assets/17a4c32d-87b7-4aa1-a1a5-67523b7ce673" />
+
+---
 ## Getting Started
 
 This project is a starting point for a Flutter application.
